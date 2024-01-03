@@ -201,7 +201,7 @@ def ray_trace(ray, spheres, depth, lights, la, near, background):
     reflect_ray = Ray(intersection_point, np.append(reflection_direction, 0))
     reflected_color = ray_trace(reflect_ray, spheres, depth + 1, lights, la, 0.001, background)
     # if there is no intersection do not add the background color to the object
-    if reflected_color.all() == background.all():
+    if np.array_equal(background, reflected_color):
         reflected_color = 0
     pixel_color = color(intersection_point, closest_object, spheres, lights, la, clipped) + (
             reflected_color * closest_object.kr)
